@@ -652,5 +652,14 @@ Recibido 27-08 09:14. Adjunto PDF 2.1MB.
       if (reduce) { step(); } else { requestAnimationFrame(step); }
     })();
   </script>
+<!-- Chat en vivo del CRM: las conversaciones llegan a /chats en https://crm-softenginer.vercel.app.
+     La clave es la publicable (anon) de Supabase: está pensada para ir en el navegador. -->
+<script>
+  window.CRM_CHAT_CONFIG = {
+    supabaseUrl: "https://zxadeopundehecrmlvpj.supabase.co",
+    supabaseAnonKey: "sb_publishable_iv2n7NQ5dRX4CUQyhgBB8w_vQcojgnC"
+  };
+</script>
+<script src="https://crm-softenginer.vercel.app/chat-widget.js" defer></script>
 </body>
 </html>
