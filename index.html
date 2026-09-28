@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>SoftEnginer Fusión — Ingeniería de software y de datos</title>
+<meta name="description" content="Desarrollo de software a medida, sitios web, agentes de IA y análisis de datos. Una sola casa de ingeniería para todo el ciclo." />
+<meta name="theme-color" content="#0a0e13" />
+<meta property="og:title" content="SoftEnginer Fusión" />
+<meta property="og:description" content="Ingeniería de software y de datos: construimos el software, conectamos los datos y ponemos a trabajar a los agentes de IA." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0e13'/%3E%3Cpath d='M9 11l-4 5 4 5M23 11l4 5-4 5' stroke='%23e8a23d' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='16' r='2.6' fill='%235fd0b0'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
+<style>
+/* ============================================================
+   SoftEnginer Fusión — landing v2
+   Identidad "consola de ingeniería": casi negro azulado, ámbar
+   de terminal fósforo como único acento cálido, un verde-agua
+   apagado reservado para tokens tipo sintaxis. Tipografía Big
+   Shoulders Display (estructural, tipo plano de blueprint) +
+   IBM Plex Sans/Mono (la familia nace de una empresa de
+   ingeniería real — coherente con el rubro).
+   Diseño dark-first deliberado, no es un modo alternable.
+   ============================================================ */
+
+:root{color-scheme:dark}
+
+:root {
+  --bg: #0a0e13;
+  --bg-raised: #121821;
+  --bg-inset: #0d1319;
+  --panel-2: #182130;
+  --line: #26323f;
+  --line-soft: #1a232e;
+  --text: #eef2f6;
+  --text-soft: #94a3b3;
+  --text-faint: #5c6b7a;
+
+  --accent: #e8a23d;
+  --accent-ink: #17110a;
+  --accent-dim: rgba(232, 162, 61, 0.14);
+  --signal: #5fd0b0;
+  --signal-dim: rgba(95, 208, 176, 0.14);
+  --danger: #e2685a;
+
+  --font-display: "Big Shoulders Display", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+
+  --container-width: 1160px;
+  --shadow: 0, 0, 0;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+  line-height: 0.98;
+  margin: 0 0 0.45em;
+  color: #fff;
+}
+h1 { font-size: clamp(2.8rem, 7vw, 5rem); }
+h2 { font-size: clamp(1.9rem, 4.4vw, 2.9rem); }
+h3 { font-size: clamp(1.05rem, 2vw, 1.25rem); font-weight: 800; }
+
+p { margin: 0 0 1em; max-width: 62ch; color: var(--text-soft); }
+p strong { color: var(--text); }
+a { color: var(--signal); }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.7rem;
+  color: var(--accent);
+  margin-bottom: 0.9rem;
+}
+.eyebrow::before {
+  content: "";
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* ---------- layout ---------- */
+.container { width: 100%; max-width: var(--container-width); margin: 0 auto; padding: 0 1.5rem; }
+.section { padding: 5rem 0; }
+.section--raised { background: var(--bg-inset); border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+.section__head { max-width: 62ch; margin-bottom: 2.75rem; }
+
+.ruler {
+  height: 20px;
+  background:
+    repeating-linear-gradient(90deg, var(--line) 0, var(--line) 1px, transparent 1px, transparent 24px),
+    repeating-linear-gradient(90deg, var(--accent) 0, var(--accent) 2px, transparent 2px, transparent 96px);
+  opacity: 0.55;
+}
+
+/* ---------- hero ---------- */
+.hero { position: relative; overflow: hidden; background: var(--bg); padding: 6rem 0 4.5rem; }
+#hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.55; pointer-events: none; }
+.hero::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(60% 60% at 78% 8%, rgba(232,162,61,0.12), transparent 60%),
+              linear-gradient(180deg, rgba(10,14,19,0) 0%, var(--bg) 96%);
+  pointer-events: none;
+}
+.hero-inner { position: relative; z-index: 1; }
+.hero .lede { font-size: 1.15rem; max-width: 44ch; }
+.hero-grid { display: grid; grid-template-columns: 1fr; gap: 2.75rem; align-items: center; }
+@media (min-width: 960px) { .hero-grid { grid-template-columns: 1.05fr 1fr; } }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 1.85rem; }
+
+.console {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-raised);
+  box-shadow: 0 30px 70px rgba(var(--shadow), 0.55);
+  overflow: hidden;
+  font-family: var(--font-mono);
+  position: relative;
+}
+.console__bar {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.6rem 0.9rem;
+  background: var(--panel-2);
+  border-bottom: 1px solid var(--line);
+  font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-faint);
+}
+.console__dot { width: 9px; height: 9px; border-radius: 50%; background: var(--signal); opacity: 0.7; }
+.console__body { display: grid; grid-template-columns: 1fr; gap: 0.25rem; padding: 1.1rem 1.1rem 1.3rem; font-size: 0.82rem; line-height: 1.5; }
+@media (min-width: 560px) { .console__body { grid-template-columns: 0.9fr 1.1fr; gap: 1.25rem; } }
+.console__col-label { font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 0.5rem; display: block; }
+.console__raw { color: var(--text-faint); white-space: pre-wrap; word-break: break-word; }
+.console__row { display: flex; gap: 0.5rem; }
+.console__key { color: var(--accent); }
+.console__val { color: var(--text); }
+.console__scan { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: 0.7; animation: scan 4.2s linear infinite; }
+@keyframes scan { 0% { transform: translateY(52px); } 100% { transform: translateY(360px); } }
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em;
+  font-size: 0.92rem; padding: 0.85rem 1.7rem; border: none; border-radius: 6px; cursor: pointer;
+  text-decoration: none; transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.btn--accent { background: var(--accent); color: var(--accent-ink); box-shadow: inset 0 -3px 0 rgba(0,0,0,0.25); }
+.btn--accent:hover { transform: translateY(-1px); background: #f0ae52; }
+.btn--accent:active { transform: translateY(1px); box-shadow: inset 0 -1px 0 rgba(0,0,0,0.25); }
+.btn--ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+.btn--ghost:hover { background: var(--bg-raised); border-color: var(--text-faint); }
+.btn--outline { background: transparent; color: var(--signal); border: 1px solid rgba(95,208,176,0.4); }
+.btn--outline:hover { background: var(--signal-dim); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+
+/* ---------- banner ---------- */
+.banner { background: linear-gradient(180deg, var(--bg-inset) 0%, var(--bg) 100%); border-top: 1px solid var(--line-soft); padding: 3rem 0; }
+.banner-inner { display: grid; gap: 1.6rem; align-items: center; }
+@media (min-width: 860px) { .banner-inner { grid-template-columns: 1.4fr auto; } }
+.banner .eyebrow { color: var(--signal); }
+.banner .eyebrow::before { background: var(--signal); box-shadow: 0 0 0 3px var(--signal-dim); }
+.banner-actions { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+.banner-note { display: block; margin-top: 1rem; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.03em; color: var(--text-faint); }
+
+/* ---------- servicios ---------- */
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1.25rem; }
+.card {
+  background: var(--bg-raised); border: 1px solid var(--line); border-radius: 10px;
+  padding: 1.6rem 1.6rem 1.75rem; position: relative; overflow: hidden;
+}
+.card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--accent); opacity: 0.85; }
+.card__icon { width: 34px; height: 34px; color: var(--signal); margin-bottom: 0.9rem; }
+.card__icon svg { width: 100%; height: 100%; }
+.card__tag { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 0.5rem; }
+.card h3 { margin-bottom: 0.4rem; color: var(--text); }
+.card p { margin: 0; font-size: 0.98rem; }
+
+/* ---------- editor / diagrama ---------- */
+.proof { display: grid; gap: 1.5rem; }
+@media (min-width: 900px) { .proof { grid-template-columns: 1fr 1fr; } }
+.editor {
+  border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--bg-inset);
+  font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.65;
+}
+.editor__bar { display: flex; align-items: center; gap: 6px; padding: 0.65rem 0.9rem; background: var(--panel-2); border-bottom: 1px solid var(--line); }
+.editor__bar span { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.editor__bar .fname { margin-left: 0.6rem; font-size: 0.68rem; color: var(--text-faint); letter-spacing: 0.04em; }
+.editor__body { padding: 1.1rem 1.2rem; overflow-x: auto; }
+.editor__body ol { margin: 0; padding-left: 2.2rem; }
+.editor__body li { color: var(--text-soft); white-space: pre; }
+.tok-kw { color: var(--accent); }
+.tok-str { color: var(--signal); }
+.tok-com { color: var(--text-faint); font-style: italic; }
+.tok-fn { color: #8bb4e8; }
+
+.diagram { border: 1px solid var(--line); border-radius: 10px; background: var(--bg-inset); padding: 1.4rem; display: flex; align-items: center; justify-content: center; }
+.diagram svg { width: 100%; height: auto; }
+
+/* ---------- caso ---------- */
+.case { display: grid; gap: 2rem; align-items: start; }
+@media (min-width: 900px) { .case { grid-template-columns: 1.05fr 0.95fr; } }
+.case__facts { border: 1px solid var(--line); border-radius: 10px; background: var(--bg-raised); padding: 1.5rem; font-family: var(--font-mono); font-size: 0.86rem; }
+.case__facts dl { margin: 0; display: grid; gap: 0.9rem; }
+.case__facts dt { font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
+.case__facts dd { margin: 0.25rem 0 0; color: var(--text); }
+
+/* ---------- datos prácticos ---------- */
+.facts-list { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); list-style: none; padding: 0; margin: 0; }
+.facts-list li { border: 1px solid var(--line); border-radius: 8px; padding: 1.1rem 1.2rem; background: var(--bg-raised); }
+.facts-list span.fact-key { display: block; font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.35rem; }
+.facts-list span.fact-value { display: block; font-family: var(--font-body); font-size: 1rem; color: var(--text); }
+
+/* ---------- form ---------- */
+.form { max-width: 640px; }
+.form-field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1.25rem; }
+.form-field label { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-soft); }
+.form-field input, .form-field textarea {
+  font-family: var(--font-body); font-size: 1rem; padding: 0.7rem 0.9rem;
+  border: 1px solid var(--line); border-radius: 6px; background: var(--bg-inset); color: var(--text);
+}
+.form-field input:focus, .form-field textarea:focus { border-color: var(--accent); }
+.form-field textarea { min-height: 130px; resize: vertical; }
+
+/* ---------- footer ---------- */
+.site-footer { padding: 3rem 0 2.5rem; border-top: 1px solid var(--line); color: var(--text-soft); font-size: 0.92rem; background: var(--bg-inset); }
+.site-footer strong { color: var(--text); font-family: var(--font-display); letter-spacing: 0.02em; font-weight: 800; }
+.footer-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.dev-credit { display: block; margin-top: 1.75rem; padding-top: 1.1rem; border-top: 1px dashed var(--line); font-size: 0.72rem; opacity: 0.75; }
+
+.placeholder { text-decoration: underline dashed; text-underline-offset: 3px; cursor: help; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  .console__scan { display: none; }
+  #hero-canvas { display: none; }
+}
+@media (max-width: 780px) { .section { padding: 3.5rem 0; } .hero { padding: 4rem 0 3rem; } }
+</style>
+</head>
+<body>
+<!-- ===================== HERO ===================== -->
+  <header class="hero">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+    <div class="container hero-inner">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Ingeniería de software y de datos</span>
+          <h1>SoftEnginer Fusión</h1>
+          <p class="lede">
+            Construimos el software, conectamos los datos y ponemos a trabajar a los agentes de IA.
+            Del código a la infraestructura de información: una sola casa de ingeniería para todo el ciclo.
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn--accent" href="#contacto">Hablar con un ingeniero</a>
+            <a class="btn btn--ghost" href="#servicios">Ver capacidades</a>
+          </div>
+        </div>
+
+        <div class="console" role="img"
+             aria-label="Consola que transforma un texto sin estructura en pares de metadatos clave y valor.">
+          <div class="console__bar"><span class="console__dot"></span>metadata-extract · run</div>
+          <div class="console__body">
+            <div>
+              <span class="console__col-label">Entrada · sin estructura</span>
+              <p class="console__raw">De: operaciones@cliente.cl
+Asunto: RE: lote 4482 — factura y guía
+Recibido 27-08 09:14. Adjunto PDF 2.1MB.
+"…confirmamos recepción parcial, faltan
+6 unidades del SKU-9910…"</p>
+            </div>
+            <div>
+              <span class="console__col-label">Salida · metadatos</span>
+              <div class="console__row"><span class="console__key">remitente</span><span class="console__val">operaciones@cliente.cl</span></div>
+              <div class="console__row"><span class="console__key">hilo</span><span class="console__val">lote-4482</span></div>
+              <div class="console__row"><span class="console__key">tipo_doc</span><span class="console__val">factura + guía</span></div>
+              <div class="console__row"><span class="console__key">estado</span><span class="console__val">recepción_parcial</span></div>
+              <div class="console__row"><span class="console__key">faltante</span><span class="console__val">SKU-9910 ×6</span></div>
+              <div class="console__row"><span class="console__key">adjunto</span><span class="console__val">pdf · 2.1&nbsp;MB</span></div>
+            </div>
+          </div>
+          <div class="console__scan" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== BANNER ===================== -->
+  <section class="banner" aria-labelledby="banner-title">
+    <div class="container banner-inner">
+      <div>
+        <span class="eyebrow">Contacto directo · sin intermediarios</span>
+        <h2 id="banner-title">Habla directamente con quien construye</h2>
+        <p>
+          ¿Quieres una referencia concreta? Pide acceso al <strong>CRM de SoftEnginer</strong>
+          que implementamos sobre n8n (Proyecto&nbsp;N8N): captura de contactos, normalización
+          y seguimiento de oportunidades en un flujo operable. Escríbenos y te lo mostramos funcionando.
+          ¿Ya nos escribiste antes? Consulta el estado de tu solicitud sin esperar respuesta.
+        </p>
+      </div>
+      <div class="banner-actions">
+        <a class="btn btn--accent" href="#contacto">Contáctanos directamente</a>
+        <a class="btn btn--ghost" href="https://n8n.2-29-53-181.sslip.io/form/crm-softenginer" data-crm-popup>Solicitud cliente</a>
+        <a class="btn btn--ghost" href="https://n8n.2-29-53-181.sslip.io/form/crm-reagendar" data-crm-popup>Solicitar reagendamiento</a>
+        <a class="btn btn--outline" href="https://crm-softenginer.vercel.app/seguimiento" target="_blank" rel="noopener">Consultar mi solicitud</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="ruler" aria-hidden="true"></div>
+
+  <!-- ===================== SOBRE ===================== -->
+  <section class="section" id="sobre" aria-labelledby="sobre-title">
+    <div class="container">
+      <div class="section__head">
+        <span class="eyebrow">Sobre SoftEnginer Fusión</span>
+        <h2 id="sobre-title">Una casa de ingeniería, no una fábrica de plantillas</h2>
+        <p>
+          SoftEnginer Fusión reúne desarrollo de software, implementación web y arquitectura de datos
+          en un mismo equipo. Trabajamos por problema, no por catálogo: primero entendemos cómo se
+          mueve la información en tu operación —correos, formularios, sistemas, archivos— y recién
+          ahí decidimos qué construir, qué integrar y qué automatizar con agentes.
+        </p>
+        <p>
+          El resultado es medible: menos trabajo manual de copiar y pegar, datos consistentes entre
+          sistemas y procesos que quedan documentados y operables por tu propio equipo.
+        </p>
+      </div>
+
+      <div class="proof">
+        <div class="editor" role="img" aria-label="Fragmento de código real: clasificación de leads por monto en el CRM de SoftEnginer.">
+          <div class="editor__bar"><span style="background:#e2685a"></span><span style="background:#e8a23d"></span><span style="background:#5fd0b0"></span><span class="fname">clasificar_tramo.sql</span></div>
+          <div class="editor__body">
+            <ol>
+              <li><span class="tok-com">-- Ruteo automático de un lead nuevo, por monto</span></li>
+              <li><span class="tok-kw">select</span> <span class="tok-fn">case</span></li>
+              <li>&nbsp;&nbsp;<span class="tok-kw">when</span> monto <span class="tok-kw">between</span> 500 <span class="tok-kw">and</span> 1000</li>
+              <li>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tok-kw">then</span> <span class="tok-str">'DD · Asistente'</span></li>
+              <li>&nbsp;&nbsp;<span class="tok-kw">when</span> monto &gt; 1000 <span class="tok-kw">and</span> monto &lt;= 5000</li>
+              <li>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tok-kw">then</span> <span class="tok-str">'CC · Jefe de Área'</span></li>
+              <li>&nbsp;&nbsp;<span class="tok-kw">when</span> monto &gt; 5000 <span class="tok-kw">and</span> monto &lt;= 10000</li>
+              <li>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tok-kw">then</span> <span class="tok-str">'BB · Gerente Comercial'</span></li>
+              <li>&nbsp;&nbsp;<span class="tok-kw">when</span> monto &gt; 10000</li>
+              <li>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tok-kw">then</span> <span class="tok-str">'AA · Gerente General'</span></li>
+              <li><span class="tok-fn">end</span> <span class="tok-kw">as</span> tramo</li>
+              <li><span class="tok-kw">from</span> solicitud_entrante;</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="diagram" role="img" aria-label="Diagrama: formulario o chat entra, se clasifica y guarda en Postgres, y llega al tablero comercial.">
+          <svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#5fd0b0"></path>
+              </marker>
+            </defs>
+            <g font-family="IBM Plex Mono, monospace" font-size="11" fill="#eef2f6">
+              <rect x="10" y="18" width="112" height="46" rx="6" fill="#182130" stroke="#26323f"></rect>
+              <text x="66" y="37" text-anchor="middle" fill="#94a3b3" font-size="9" letter-spacing="1">ENTRADA</text>
+              <text x="66" y="53" text-anchor="middle">Form / Chat</text>
+
+              <rect x="10" y="102" width="112" height="46" rx="6" fill="#182130" stroke="#e8a23d"></rect>
+              <text x="66" y="121" text-anchor="middle" fill="#e8a23d" font-size="9" letter-spacing="1">CLASIFICA</text>
+              <text x="66" y="137" text-anchor="middle">Por monto</text>
+
+              <rect x="10" y="186" width="112" height="46" rx="6" fill="#182130" stroke="#26323f"></rect>
+              <text x="66" y="205" text-anchor="middle" fill="#94a3b3" font-size="9" letter-spacing="1">GUARDA</text>
+              <text x="66" y="221" text-anchor="middle">Postgres · RLS</text>
+
+              <rect x="284" y="102" width="126" height="46" rx="6" fill="#182130" stroke="#5fd0b0"></rect>
+              <text x="347" y="121" text-anchor="middle" fill="#5fd0b0" font-size="9" letter-spacing="1">SALIDA</text>
+              <text x="347" y="137" text-anchor="middle">Tablero comercial</text>
+
+              <path d="M66,64 V102" stroke="#5fd0b0" stroke-width="1.5" fill="none" marker-end="url(#arrow)"></path>
+              <path d="M66,148 V186" stroke="#5fd0b0" stroke-width="1.5" fill="none" marker-end="url(#arrow)"></path>
+              <path d="M122,125 H284" stroke="#5fd0b0" stroke-width="1.5" fill="none" marker-end="url(#arrow)"></path>
+
+              <rect x="150" y="186" width="120" height="46" rx="6" fill="#182130" stroke="#26323f" opacity="0.9"></rect>
+              <text x="210" y="205" text-anchor="middle" fill="#94a3b3" font-size="9" letter-spacing="1">AVISA</text>
+              <text x="210" y="221" text-anchor="middle" font-size="10">Email · Calendar</text>
+              <path d="M122,209 H150" stroke="#26323f" stroke-width="1.5" fill="none" marker-end="url(#arrow)"></path>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ruler" aria-hidden="true"></div>
+
+  <!-- ===================== SERVICIOS ===================== -->
+  <section class="section section--raised" id="servicios" aria-labelledby="servicios-title">
+    <div class="container">
+      <div class="section__head">
+        <span class="eyebrow">Capacidades</span>
+        <h2 id="servicios-title">Lo que hacemos</h2>
+        <p>Cada línea se contrata sola o combinada, según lo que el proyecto necesite.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 6 2 12l6 6M16 6l6 6-6 6"/></svg></div>
+          <span class="card__tag">01 · build</span>
+          <h3>Desarrollo de software a medida</h3>
+          <p>Aplicaciones, APIs e integraciones diseñadas para tu proceso real, con código mantenible y entregado por versiones.</p>
+        </article>
+        <article class="card">
+          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18Z"/></svg></div>
+          <span class="card__tag">02 · web</span>
+          <h3>Implementación de páginas y sitios web</h3>
+          <p>Landing pages y sitios corporativos: diseño, desarrollo, despliegue y puesta en producción con dominio y analítica.</p>
+        </article>
+        <article class="card">
+          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="5" cy="6" r="2.4"/><circle cx="19" cy="6" r="2.4"/><circle cx="12" cy="18" r="2.4"/><path d="M6.8 7.6 10.6 16M17.2 7.6 13.4 16M7.4 6h9.2"/></svg></div>
+          <span class="card__tag">03 · agents</span>
+          <h3>Orquestación de agentes de IA</h3>
+          <p>Diseñamos y operamos equipos de agentes —tu "agencia artificial"— que ejecutan tareas encadenadas con herramientas, memoria y controles de revisión.</p>
+        </article>
+        <article class="card">
+          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v6H4zM4 14h10v6H4z"/><path d="M8 7h1M8 17h1"/></svg></div>
+          <span class="card__tag">04 · metadata</span>
+          <h3>Análisis de metadatos</h3>
+          <p>Extracción y normalización de metadatos desde documentos, correos y registros para clasificar, buscar y auditar información dispersa.</p>
+        </article>
+        <article class="card">
+          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v4H4zM4 15h16v4H4z"/><path d="M4 9v6M20 9v6"/></svg></div>
+          <span class="card__tag">05 · casillas</span>
+          <h3>Análisis de casillas</h3>
+          <p>Lectura estructurada de bandejas de correo y colas de mensajes: detección de intención, hilos, adjuntos y estado, listo para enrutar o responder.</p>
+        </article>
+        <article class="card">
+          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="5.5" rx="8" ry="2.8"/><path d="M4 5.5V12c0 1.5 3.6 2.8 8 2.8s8-1.3 8-2.8V5.5M4 12v6.5c0 1.5 3.6 2.8 8 2.8s8-1.3 8-2.8V12"/></svg></div>
+          <span class="card__tag">06 · scale</span>
+          <h3>Procesamiento de grandes volúmenes de información</h3>
+          <p>Ingesta, transformación y consulta de grandes unidades de datos con pipelines reproducibles y trazabilidad de punta a punta.</p>
+        </article>
+        <article class="card">
+          <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 8 4-8 4-8-4 8-4Z"/><path d="m4 12 8 4 8-4M4 16l8 4 8-4"/></svg></div>
+          <span class="card__tag">07 · advisory</span>
+          <h3>Asesorías y consultorías a medida</h3>
+          <p>Acompañamiento técnico según lo que cada cliente necesita: diagnóstico, arquitectura, elección de herramientas y hoja de ruta.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="ruler" aria-hidden="true"></div>
+
+  <!-- ===================== CASO DE REFERENCIA ===================== -->
+  <section class="section" id="caso" aria-labelledby="caso-title">
+    <div class="container">
+      <div class="section__head">
+        <span class="eyebrow">Proyecto de referencia</span>
+        <h2 id="caso-title">CRM SoftEnginer sobre n8n</h2>
+      </div>
+      <div class="case">
+        <div>
+          <p>
+            En el <strong>Proyecto&nbsp;N8N</strong> implementamos un CRM operado desde flujos de n8n.
+            El sistema toma los contactos desde el canal de entrada, los normaliza a un formato único
+            y deja cada oportunidad con su estado, su responsable y su historial en un tablero que el
+            equipo comercial usa sin tocar el motor de automatización.
+          </p>
+          <p>
+            Es el mismo enfoque que aplicamos en cualquier proyecto: primero el flujo de datos, después
+            la interfaz. Puedes pedir una demostración en vivo desde el banner de arriba o el formulario
+            de contacto. El cliente final también tiene su propio acceso: puede seguir el estado de su
+            solicitud, ver si ya se agendó una reunión y escribirnos por chat, todo sin llamar ni esperar
+            un correo de vuelta.
+          </p>
+          <div class="btn-row">
+            <a class="btn btn--accent" href="https://n8n.2-29-53-181.sslip.io/form/crm-softenginer" data-crm-popup>Solicitud cliente</a>
+            <a class="btn btn--outline" href="https://n8n.2-29-53-181.sslip.io/form/crm-reagendar" data-crm-popup>Solicitar reagendamiento</a>
+            <a class="btn btn--outline" href="https://crm-softenginer.vercel.app/seguimiento" target="_blank" rel="noopener">Seguimiento de solicitud</a>
+          </div>
+        </div>
+        <div class="case__facts">
+          <dl>
+            <div><dt>Plataforma</dt><dd>n8n (flujos de automatización) + Postgres/Supabase</dd></div>
+            <div><dt>Alcance</dt><dd>Captura de contactos, normalización y seguimiento de oportunidades</dd></div>
+            <div><dt>Entrega</dt><dd>Flujo operable + tablero web + formulario de acceso</dd></div>
+            <div>
+              <dt>Formularios</dt>
+              <dd><a href="https://n8n.2-29-53-181.sslip.io/form/crm-softenginer" data-crm-popup>Solicitud cliente</a><br />
+                  <a href="https://n8n.2-29-53-181.sslip.io/form/crm-reagendar" data-crm-popup>Reagendamiento</a></dd>
+            </div>
+            <div>
+              <dt>Seguimiento del cliente</dt>
+              <dd>Portal público por código de solicitud + email: <a href="https://crm-softenginer.vercel.app/seguimiento" target="_blank" rel="noopener">abrir portal</a></dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DATOS PRÁCTICOS ===================== -->
+  <section class="section section--raised" id="datos" aria-labelledby="datos-title">
+    <div class="container">
+      <div class="section__head">
+        <span class="eyebrow">Datos prácticos</span>
+        <h2 id="datos-title">Cómo trabajamos</h2>
+        <p>Así se ve un proyecto con nosotros, desde el primer contacto.</p>
+      </div>
+      <ul class="facts-list">
+        <li><span class="fact-key">Modalidad</span><span class="fact-value">Remoto · proyectos en LATAM</span></li>
+        <li><span class="fact-key">Horario</span><span class="fact-value">Lun a Vie, 9:00–18:00</span></li>
+        <li><span class="fact-key">Inicio de proyecto</span><span class="fact-value">2–3 semanas desde el acuerdo</span></li>
+        <li><span class="fact-key">Modelo de precio</span><span class="fact-value">Por proyecto o por iteración</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="ruler" aria-hidden="true"></div>
+
+  <!-- ===================== CONTACTO ===================== -->
+  <section class="section" id="contacto" aria-labelledby="contacto-title">
+    <div class="container">
+      <div class="section__head">
+        <span class="eyebrow">Contacto</span>
+        <h2 id="contacto-title">Cuéntanos qué necesitas resolver</h2>
+        <p>Completa la solicitud: te llega al instante un código para seguir su estado, un especialista te contacta y respondemos con una propuesta de alcance.</p>
+      </div>
+
+      <div class="btn-row">
+        <a class="btn btn--accent" href="https://n8n.2-29-53-181.sslip.io/form/crm-softenginer" data-crm-popup>Enviar mi solicitud</a>
+        <a class="btn btn--ghost" href="mailto:juan.garces.0803@gmail.com">Prefiero escribir un correo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <strong>SoftEnginer Fusión</strong>
+          <p style="margin:0.5rem 0 0;">Ingeniería de software y de datos.</p>
+        </div>
+        <div>
+          <p style="margin:0;">
+            <a href="mailto:juan.garces.0803@gmail.com">juan.garces.0803@gmail.com</a><br />
+            <span class="placeholder" title="Personaliza este dato">+56 9 0000 0000</span><br />
+            Santiago, Chile
+          </p>
+        </div>
+      </div>
+      <span class="dev-credit">
+        Sitio desarrollado por <span class="placeholder" title="Completar datos de la agencia antes de publicar">[nombre de la agencia · correo · teléfono]</span>.
+      </span>
+    </div>
+  </footer>
+
+  <script>
+    /* Popup de los formularios n8n */
+    (function () {
+      var W = 520, H = 780;
+      document.querySelectorAll('[data-crm-popup]').forEach(function (el) {
+        el.addEventListener('click', function (e) {
+          var left = 0, top = 0;
+          try {
+            left = Math.max(0, (window.screenX || 0) + ((window.outerWidth || W) - W) / 2);
+            top = Math.max(0, (window.screenY || 0) + ((window.outerHeight || H) - H) / 2);
+          } catch (err) {}
+          var slug = ((el.getAttribute('href') || '').split('/').pop() || 'form').replace(/[^a-z0-9_-]/gi, '');
+          var win = window.open(el.href, 'crm_' + slug,
+            'popup=yes,width=' + W + ',height=' + H + ',left=' + Math.round(left) + ',top=' + Math.round(top) +
+            ',menubar=no,toolbar=no,location=yes,status=no,resizable=yes,scrollbars=yes');
+          if (win) { e.preventDefault(); win.focus(); }
+        });
+      });
+    })();
+
+    /* Red ambiente del hero: nodos flotando + líneas entre vecinos cercanos. */
+    (function () {
+      var canvas = document.getElementById('hero-canvas');
+      if (!canvas || !canvas.getContext) return;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var ctx = canvas.getContext('2d');
+      var header = canvas.closest('.hero');
+      var W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2);
+      var nodes = [];
+      var N = 46;
+
+      function resize() {
+        W = header.clientWidth; H = header.clientHeight;
+        canvas.width = W * DPR; canvas.height = H * DPR;
+        canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      }
+      function seed() {
+        nodes = [];
+        for (var i = 0; i < N; i++) {
+          nodes.push({
+            x: Math.random() * W, y: Math.random() * H,
+            vx: (Math.random() - 0.5) * 0.18, vy: (Math.random() - 0.5) * 0.18
+          });
+        }
+      }
+      function step() {
+        ctx.clearRect(0, 0, W, H);
+        for (var i = 0; i < nodes.length; i++) {
+          var n = nodes[i];
+          n.x += n.vx; n.y += n.vy;
+          if (n.x < 0 || n.x > W) n.vx *= -1;
+          if (n.y < 0 || n.y > H) n.vy *= -1;
+        }
+        for (var a = 0; a < nodes.length; a++) {
+          for (var b = a + 1; b < nodes.length; b++) {
+            var dx = nodes[a].x - nodes[b].x, dy = nodes[a].y - nodes[b].y;
+            var d = Math.sqrt(dx * dx + dy * dy);
+            if (d < 130) {
+              ctx.strokeStyle = 'rgba(95,208,176,' + (0.16 * (1 - d / 130)) + ')';
+              ctx.lineWidth = 1;
+              ctx.beginPath(); ctx.moveTo(nodes[a].x, nodes[a].y); ctx.lineTo(nodes[b].x, nodes[b].y); ctx.stroke();
+            }
+          }
+        }
+        for (var j = 0; j < nodes.length; j++) {
+          ctx.fillStyle = 'rgba(232,162,61,0.55)';
+          ctx.beginPath(); ctx.arc(nodes[j].x, nodes[j].y, 1.6, 0, Math.PI * 2); ctx.fill();
+        }
+        if (!reduce) requestAnimationFrame(step);
+      }
+
+      resize(); seed();
+      window.addEventListener('resize', function () { resize(); seed(); });
+      if (reduce) { step(); } else { requestAnimationFrame(step); }
+    })();
+  </script>
+</body>
+</html>
