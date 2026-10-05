@@ -4,8 +4,7 @@ Sitio estático (un solo `index.html`, sin build). Se publica en Vercel desde la
 
 Enlaces a los servicios del CRM (cambiar si cambian los dominios):
 
-- Solicitud de cliente: `https://crm-softenginer.vercel.app/demo-widget`
-- Reagendamiento n8n: `https://n8n.2-29-53-181.sslip.io/form/crm-reagendar`
+- Formularios n8n: `https://n8n.2-29-53-181.sslip.io/form/crm-softenginer` y `/form/crm-reagendar`
 - Portal de seguimiento: `https://crm-softenginer.vercel.app/seguimiento`
 
 Los formularios de n8n tienen "ignoreBots": responden 401 a `curl` y herramientas
