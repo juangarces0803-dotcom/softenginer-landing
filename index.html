@@ -577,6 +577,19 @@ Recibido 27-08 09:14. Adjunto PDF 2.1MB.
   </footer>
 
   <script>
+    /* Ambiente de PRUEBA: abierta desde localhost, la landing apunta al n8n de prueba (n8n-v2) y al
+       CRM v2 local en vez de los de producción. En Vercel no cambia nada. */
+    window.CRM_ENV_PRUEBA = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+    if (window.CRM_ENV_PRUEBA) {
+      document.querySelectorAll('a[href]').forEach(function (a) {
+        a.setAttribute('href', a.getAttribute('href')
+          .replace('https://n8n.2-29-53-181.sslip.io', 'https://n8n-v2.2-29-53-181.sslip.io')
+          .replace('https://crm-softenginer.vercel.app', 'http://localhost:3001'));
+      });
+    }
+  </script>
+
+  <script>
     /* Popup de los formularios n8n */
     (function () {
       var W = 520, H = 780;
@@ -656,11 +669,20 @@ Recibido 27-08 09:14. Adjunto PDF 2.1MB.
 <!-- Chat en vivo del CRM: las conversaciones llegan a /chats en https://crm-softenginer.vercel.app.
      La clave es la publicable (anon) de Supabase: está pensada para ir en el navegador. -->
 <script>
-  window.CRM_CHAT_CONFIG = {
+  window.CRM_CHAT_CONFIG = window.CRM_ENV_PRUEBA ? {
+    // Ambiente de PRUEBA: base Supabase "CRM-Logistic" y CRM v2 local.
+    supabaseUrl: "https://mgfpbtklpnlepdzttzwy.supabase.co",
+    supabaseAnonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1nZnBidGtscG5sZXBkenR0end5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyMDQxMTYsImV4cCI6MjEwNjc4MDExNn0.VZ951BbSYX-YuVfdW-DqkJDdcVAQKGYQ9y34WB6n5ac"
+  } : {
     supabaseUrl: "https://zxadeopundehecrmlvpj.supabase.co",
     supabaseAnonKey: "sb_publishable_iv2n7NQ5dRX4CUQyhgBB8w_vQcojgnC"
   };
+  (function () {
+    var s = document.createElement('script');
+    s.src = (window.CRM_ENV_PRUEBA ? 'http://localhost:3001' : 'https://crm-softenginer.vercel.app') + '/chat-widget.js';
+    s.defer = true;
+    document.body.appendChild(s);
+  })();
 </script>
-<script src="https://crm-softenginer.vercel.app/chat-widget.js" defer></script>
 </body>
 </html>
